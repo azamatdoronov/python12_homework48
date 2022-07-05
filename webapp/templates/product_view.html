@@ -26,9 +26,13 @@
     <p>
         <b>Название:</b> {{ product.p_name }}
     </p>
-
     <p>
-        <b>Описание:</b> {{ product.description }}
+        <b>Описание:</b>
+        {% if product.description == None %}
+            {{ "" }}
+        {% else %}
+            {{ product.description }}
+        {% endif %}
     </p>
     <p>
         <b>Остаток:</b> {{ product.balance }} шт.
@@ -53,7 +57,7 @@
                     <button type="button" class="btn btn-success" data-bs-dismiss="modal">Нет</button>
                     <form action="{% url "delete_product" product.pk %}" method="post">
                         {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Да</button>
+                        <button type="submit" class="btn btn-danger">Да</button>
                     </form>
                 </div>
             </div>

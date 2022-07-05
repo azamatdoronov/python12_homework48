@@ -1,13 +1,13 @@
 from django.db import models
 
 CATEGORY_CHOICES = [('bakery', 'выпечка'), ('sweets', 'сладости'),
-                    ('drinks', 'напитки'), ('veggies', 'овощи'), ('other', 'Разное')]
+                    ('drinks', 'напитки'), ('veggies', 'овощи'), ('other', 'разное')]
 
 
 class Product(models.Model):
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default=CATEGORY_CHOICES[0][0],
                                 verbose_name="Категория")
-    p_name = models.CharField(max_length=45, null=False, blank=False, default="No Product",
+    p_name = models.CharField(max_length=100, null=False, blank=False, default="No Product",
                               verbose_name="Имя товара")
     description = models.TextField(max_length=2000, null=True, blank=True, verbose_name="Описание")
     balance = models.IntegerField(verbose_name="Остаток")

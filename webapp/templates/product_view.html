@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block nav %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url "create_product" %}">Создать карточку продукта</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url "update_product" product.pk %}">Редактировать</a>
+    </li>
+    <li class="nav-item">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productDeleteModal">
+            Удалить
+        </button>
+    </li>
+
+
+{% endblock %}
+
+
+{% block title %} Product view {% endblock %}
+
+{% block content %}
+    <h1>Карточка продукта</h1>
+    <p>
+        <b>Категория:</b> {{ product.get_category_display }}
+    </p>
+    <p>
+        <b>Название:</b> {{ product.p_name }}
+    </p>
+
+    <p>
+        <b>Описание:</b> {{ product.description }}
+    </p>
+    <p>
+        <b>Остаток:</b> {{ product.balance }} шт.
+    </p>
+    <p>
+        <b>Цена:</b> {{ product.price }} сом
+    </p>
+    <a href="{% url "index" %}">На главную</a>
+
+    <div class="modal fade" id="productDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productDeleteModal">Подтверждение</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Хотите удалить продукт "{{ product.p_name }}"?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Нет</button>
+                    <form action="{% url "delete_product" product.pk %}" method="post">
+                        {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Да</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

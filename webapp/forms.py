@@ -1,8 +1,8 @@
 from django import forms
 from django.forms import widgets
 
-CATEGORY_CHOICES = [('bakery', 'выпечка'), ('sweets', 'сладости'),
-                    ('drinks', 'напитки'), ('veggies', 'овощи'), ('other', 'разное')]
+CATEGORY_CHOICES = [('other', 'разное'), ('bakery', 'выпечка'), ('sweets', 'сладости'),
+                    ('drinks', 'напитки'), ('veggies', 'овощи')]
 
 
 class ProductForm(forms.Form):

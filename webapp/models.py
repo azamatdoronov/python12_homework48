@@ -1,7 +1,7 @@
 from django.db import models
 
-CATEGORY_CHOICES = [('bakery', 'выпечка'), ('sweets', 'сладости'),
-                    ('drinks', 'напитки'), ('veggies', 'овощи'), ('other', 'разное')]
+CATEGORY_CHOICES = [('other', 'разное'), ('bakery', 'выпечка'), ('sweets', 'сладости'),
+                    ('drinks', 'напитки'), ('veggies', 'овощи')]
 
 
 class Product(models.Model):

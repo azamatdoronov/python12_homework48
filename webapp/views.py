@@ -50,7 +50,7 @@ def update_product(request, pk):
         form = ProductForm(data=request.POST)
         if form.is_valid():
             product.category = form.cleaned_data.get("category")
-            product.p_name = form.cleaned_data.get("product_name")
+            product.p_name = form.cleaned_data.get("p_name")
             product.description = form.cleaned_data.get("description")
             product.balance = form.cleaned_data.get("balance")
             product.price = form.cleaned_data.get("price")

@@ -8,7 +8,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display_links = ['p_name']
     list_filter = ['category']
     search_fields = ['p_name']
-    fields = ['p_name', 'category', 'balance', 'price', 'created_time', 'updated_time']
+    fields = ['category', 'p_name', 'balance', 'price', 'created_time', 'updated_time']
     readonly_fields = ['created_time', 'updated_time']
 
 

@@ -21,6 +21,11 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
+        permissions = [
+            ('product_create', 'Добавление товара'),
+            ('product_update', 'Редактирование товара'),
+            ('product_delete', 'Удаление товара'),
+        ]
 
 
 # class Product(models.Model):

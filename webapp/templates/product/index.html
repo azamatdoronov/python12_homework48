@@ -15,8 +15,14 @@
                         <p class="card-text">Категория: {{ product.get_category_display }}</p>
                         <p class="card-text">Осталось: {{ product.balance }} по {{ product.price }} сом</p>
                         <div class="btn-group">
-                            <a class="btn btn-primary" href="{% url 'webapp:product_update' product.pk %}">Изменить</a>
-                            <a class="btn btn-danger" href="{% url 'webapp:product_delete' product.pk %}">Удалить</a>
+                            {% if perms.webapp.product_update %}
+                                <a class="btn btn-primary"
+                                   href="{% url 'webapp:product_update' product.pk %}">Изменить</a>
+                            {% endif %}
+                            {% if perms.webapp.product_delete %}
+                                <a class="btn btn-danger"
+                                   href="{% url 'webapp:product_delete' product.pk %}">Удалить</a>
+                            {% endif %}
                         </div>
                         {% include "partial/cart_add_form.html" %}
                     </div>

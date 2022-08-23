@@ -21,16 +21,18 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 {% block nav %}{% endblock %}
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'webapp:product_create' %}">Создание товара</a>
-                </li>
+                {% if perms.webapp.product_update %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'webapp:product_create' %}">Создание товара</a>
+                    </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'webapp:cart' %}">Корзина</a>
                 </li>
-                            {% if request.user.is_authenticated %}
+                {% if request.user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url "accounts:profile" request.user.pk %}">Здравствуйте, {{ user.username }}</a>
+                        <a class="nav-link"
+                           href="{% url "accounts:profile" request.user.pk %}">Здравствуйте, {{ user.username }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url "accounts:logout" %}">Выйти</a>

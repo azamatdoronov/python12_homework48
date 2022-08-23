@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.core.validators import MinValueValidator
 
@@ -28,22 +29,6 @@ class Product(models.Model):
         ]
 
 
-# class Product(models.Model):
-#     name = models.CharField(max_length=100, verbose_name='Название')
-#     description = models.TextField(max_length=2000, null=True, blank=True, verbose_name='Описание')
-#     category = models.CharField(max_length=20, default=DEFAULT_CATEGORY, choices=CATEGORY_CHOICES,
-#                                 verbose_name='Категория')
-#     amount = models.PositiveIntegerField(verbose_name='Остаток')
-#     price = models.DecimalField(verbose_name='Цена', max_digits=7, decimal_places=2,
-#                                 validators=(MinValueValidator(0),))
-#
-#     def __str__(self):
-#         return f'{self.name} - {self.amount}'
-#
-#     class Meta:
-#         verbose_name = 'Товар'
-#         verbose_name_plural = 'Товары'
-
 
 class Cart(models.Model):
     product = models.ForeignKey('webapp.Product', on_delete=models.CASCADE,
@@ -69,6 +54,8 @@ class Cart(models.Model):
 
 
 class Order(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL,
+                             verbose_name='Пользователь', related_name='orders')
     name = models.CharField(max_length=50, verbose_name='Имя')
     phone = models.CharField(max_length=30, verbose_name='Телефон')
     address = models.CharField(max_length=100, verbose_name='Адрес')
@@ -82,6 +69,10 @@ class Order(models.Model):
     class Meta:
         verbose_name = 'Заказ'
         verbose_name_plural = 'Заказы'
+        permissions = [
+            ('order_list', 'Просмотр заказов'),
+            ('order_add', 'Добавить заказ')
+        ]
 
 
 class OrderProduct(models.Model):

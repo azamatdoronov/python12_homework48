@@ -11,11 +11,6 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url "accounts:change_password" %}">Сменить пароль</a>
             </li>
-            {% if perms.webapp.view_users %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url "webapp:ViewUsers" %}">Посмотреть всех пользователей</a>
-                </li>
-            {% endif %}
         {% endif %}
     {% endif %}
 {% endblock %}
@@ -30,14 +25,6 @@
             <h6 class="card-subtitle mb-2 text-muted">Фамилия: {{ user_obj.last_name }}</h6>
             <h6 class="card-subtitle mb-2 text-muted">Почта: {{ user_obj.email }}</h6>
             <h6 class="card-subtitle mb-2 text-muted">О себе: {{ user_obj.about_me }}</h6>
-            {% if user_obj.profile.gitprofile %}
-                <h6 class="card-subtitle mb-2 text-muted">Профиль в Git: <a class="nav-link"
-                                                                            href="{{ user_obj.gitprofile }}">Перейти на GIT</a></h6>
-            {% else %}
-                <h6 class="card-subtitle mb-2 text-muted">Ссылка на GIT отсутствует</h6>
-            {% endif %}
-
         </div>
     </div>
-    {% include "partial/projects_list_partial.html" %}
 {% endblock %}

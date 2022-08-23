@@ -62,10 +62,8 @@
 {% endblock %}
 
 
-
-
 {% block scripts %}
-    {% if basket and form.errors %}
+    {% if cart and form.errors %}
         <script type="application/javascript">
             $(window).on('load', function () {
                 $('#orderModal').modal('show');

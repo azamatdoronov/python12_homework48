@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Заказы{% endblock %}
+
+{% block menu %}
+
+{% endblock %}
+
+{% block content %}
+
+    <h1 class="text-center">Заказы</h1>
+    <table class="table table-striped">
+                {% if orders == user %}
+        <thead>
+        <tr>
+            <th scope="col">Номер заказа</th>
+            <th scope="col">Заказчик</th>
+            <th scope="col">Телефон</th>
+            <th scope="col">Дата создания</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.pk }}</td>
+                <td>{{ order.name }}</td>
+                <td>{{ order.phone }}</td>
+                <td>{{ order.created_at|date:'d.m.Y' }}</td>
+                <td>
+                    <a href="{% url 'webapp:order_view' order.pk %}">Просмотр</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+                    {% endif %}
+    </table>
+{% endblock %}

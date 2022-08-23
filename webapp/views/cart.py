@@ -55,7 +55,7 @@ class CartDeleteView(DeleteView):
 
 class CartDeleteOneView(DeleteView):
     model = Cart
-    success_url = reverse_lazy('webapp:card')
+    success_url = reverse_lazy('webapp:cart')
 
     def get(self, request, *args, **kwargs):
         return self.delete(request, *args, **kwargs)
@@ -70,25 +70,3 @@ class CartDeleteOneView(DeleteView):
         else:
             cart.save()
         return HttpResponseRedirect(success_url)
-
-
-class OrderCreate(CreateView):
-    model = Order
-    form_class = OrderForm
-    success_url = reverse_lazy('webapp:index')
-
-    def form_valid(self, form):
-        order = form.save()
-
-        products = []
-        order_products = []
-
-        for item in Cart.objects.all():
-            order_products.append(OrderProduct(product=item.product, qty=item.qty, order=order))
-            item.product.balance -= item.qty
-            products.append(item.product)
-
-        OrderProduct.objects.bulk_create(order_products)
-        Product.objects.bulk_update(products, ("balance",))
-        Cart.objects.all().delete()
-        return HttpResponseRedirect(self.success_url)

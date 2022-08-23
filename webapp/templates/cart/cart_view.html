@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
+{% block title %}Корзина{% endblock %}
 {% block content %}
-    <h3>Корзина</h3>
+    <h1 class="text-center">Корзина</h1>
     <table class="table">
         <thead>
         <tr>
@@ -27,7 +28,126 @@
         </tbody>
     </table>
     <h5>Общая цена: {{ total }}</h5>
-    <form action="{% url "webapp:order_create" %}" method="post">
-        {% include 'partial/form.html' with button_text="Заказать" %}
-    </form>
+
+    {% if cart %}
+        <p class="text-center">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#orderModal">
+                Сделать заказ
+            </button>
+        </p>
+
+        <form action="{% url "webapp:order_create" %}" method="POST">
+            <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Сделать заказ</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            {% include 'partial/form.html' %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                            <button type="submit" class="btn btn-primary">Заказать</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    {% endif %}
 {% endblock %}
+
+
+
+
+{% block scripts %}
+    {% if basket and form.errors %}
+        <script type="application/javascript">
+            $(window).on('load', function () {
+                $('#orderModal').modal('show');
+            });
+        </script>
+    {% endif %}
+{% endblock %}
+
+
+
+
+
+
+
+
+{#{% extends "base.html" %}#}
+{##}
+{#{% block content %}#}
+{#    <h3>Корзина</h3>#}
+{#    <table class="table">#}
+{#        <thead>#}
+{#        <tr>#}
+{#            <th scope="col">Название</th>#}
+{#            <th scope="col">Количество</th>#}
+{#            <th scope="col">Цена</th>#}
+{#            <th scope="col">Сумма</th>#}
+{#            <th></th>#}
+{#            <th></th>#}
+{#        </tr>#}
+{#        </thead>#}
+{#        <tbody>#}
+{#        {% for c in cart %}#}
+{#            <tr>#}
+{#                <td>{{ c.product.p_name }}</td>#}
+{#                <td>{{ c.qty }}</td>#}
+{#                <td>{{ c.product.price }}</td>#}
+{#                <td>{{ c.get_product_total }}</td>#}
+{#                <td><a href="{% url "webapp:remove_one_for_cart" c.pk %}">Удалить один</a></td>#}
+{#                <td><a href="{% url "webapp:remove_for_cart" c.pk %}">Удалить</a></td>#}
+{#            </tr>#}
+{#        {% endfor %}#}
+{#        </tbody>#}
+{#    </table>#}
+{#    <h5>Общая цена: {{ total }}</h5>#}
+{#     {% if cart %}#}
+{#        <p class="text-center">#}
+{#            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#orderModal">#}
+{#                Создать заказ#}
+{#            </button>#}
+{#        </p>#}
+{#        <form action="{% url "webapp:cart" %}" method="POST">#}
+{#            <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"#}
+{#                 aria-hidden="true">#}
+{#                <div class="modal-dialog" role="document">#}
+{#                    <div class="modal-content">#}
+{#                        <div class="modal-header">#}
+{#                            <h5 class="modal-title" id="exampleModalLabel">Создать заказ</h5>#}
+{#                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+{#                                <span aria-hidden="true">&times;</span>#}
+{#                            </button>#}
+{#                        </div>#}
+{#                        <div class="modal-body">#}
+{#                            {% include 'partial/form.html' %}#}
+{#                        </div>#}
+{#                        <div class="modal-footer">#}
+{#                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>#}
+{#                            <button type="submit" class="btn btn-primary">Заказать</button>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </form>#}
+{#    {% endif %}#}
+{#{% endblock %}#}
+{##}
+{##}
+{#{% block scripts %}#}
+{#    {% if basket and form.errors %}#}
+{#        <script type="application/javascript">#}
+{#            $(window).on('load', function () {#}
+{#                $('#orderModal').modal('show');#}
+{#            });#}
+{#        </script>#}
+{#    {% endif %}#}
+{#{% endblock %}#}

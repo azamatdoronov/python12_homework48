@@ -29,12 +29,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'webapp:cart' %}">Корзина</a>
                 </li>
-                {% if perms.webapp.order_list %}
-                    <li class="nav-item"><a href="{% url 'webapp:order_list' %}" class="nav-link">Посмотреть заказы</a></li>
-                {% endif %}
+                {% if request.user.is_authenticated %}
+                    {% if perms.webapp.order_list %}
+                        <li class="nav-item"><a href="{% url 'webapp:order_list' %}" class="nav-link">Посмотреть
+                            заказы</a></li>
+                    {% endif %}
                 {% if perms.webapp.order_add %}
                     <li class="nav-item"><a href="{% url 'webapp:order_create' %}" class="nav-link">Создать заказ</a>
                     </li>
+                {% endif %}
                 {% endif %}
                 {% if request.user.is_authenticated %}
                     <li class="nav-item">

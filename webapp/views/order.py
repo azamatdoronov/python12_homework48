@@ -26,8 +26,10 @@ class OrderCreateView(PermissionRequiredMixin, CreateView):
     model = Order
     form_class = OrderForm
     template_name = 'order/order_create.html'
-    permission_required = 'webapp.order_create'
     permission_denied_message = "Доступ запрещён"
+
+    def has_permission(self):
+        return self.request.user.has_perm("webapp.order_add")
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
